@@ -1,13 +1,22 @@
-function add(a,b){
-return a+b
+async function add(a, b) {
+  if (typeof a !== "number" || typeof b !== "number") {
+    throw new Error("Inputs must be numbers");
+  }
+  return a + b;
 }
 
-function getUser(id){
-fetch("https://api.example.com/user/"+id).then(r=>{
-r.json().then(data=>{
-console.log(data)
-})
-})
+async function getUser(id) {
+  try {
+    const response = await fetch(`https://api.example.com/user/${id}`);
+
+    if (!response.ok) {
+      throw new Error("Failed to fetch user");
+    }
+
+    return await response.json();
+  } catch (error) {
+    throw error;
+  }
 }
 
-module.exports={add,getUser}
+module.exports = { add, getUser };
